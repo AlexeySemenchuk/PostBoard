@@ -1,0 +1,2 @@
+D:\task\PostBoard\PostBoard\obj\Debug\PostBoard.esproj.SuggestedBindingRedirects.cache
+D:\task\PostBoard\PostBoard\obj\Debug\PostBoard.esproj.CoreCompileInputs.cache

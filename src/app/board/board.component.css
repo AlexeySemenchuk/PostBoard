@@ -1,0 +1,40 @@
+.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+.delete-button {
+  outline: none;
+}
+
+  .delete-button:focus {
+    outline: 2px solid red;
+    border-radius: 50%;
+  }
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  width: 24px;
+  height: 24px;
+}
+
+  .delete-button:focus {
+    outline: 2px solid red;
+    border-radius: 50%;
+  }
+
+.cross-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.border-red-500 {
+  border-color: red !important;
+}
+
+.invalid {
+  border-color: red;
+}

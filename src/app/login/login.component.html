@@ -1,0 +1,26 @@
+<div style="height: 90vh;" class="h-screen pt-16 flex items-start sm:items-center justify-center p-4 sm:p-0">
+  <div class="bg-white p-4 sm:p-8 rounded-lg shadow-md w-full sm:w-96 mt-4 sm:mt-0 relative">
+    <div class="absolute top-2 right-2"  (mouseenter)="showHint = true" (mouseleave)="showHint = false">
+      <div class="relative">
+        <div class="flex items-center justify-center h-6 w-6 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300">
+          <span class="text-gray-700 text-sm">?</span>
+        </div>
+        <div class="absolute w-40 top-full right-0 bg-white border p-2 rounded text-sm shadow-lg mt-2 opacity-0 transition-opacity duration-200" [ngClass]="{'opacity-100': showHint}">
+          Username: <b>admin</b>
+          <br> Password: <b>root</b>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-600">Username:</label>
+        <input type="text" id="username" class="mt-1 p-2 w-full border rounded-md" formControlName="username" required>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-600">Password:</label>
+        <input type="password" id="password" class="mt-1 p-2 w-full border rounded-md" formControlName="password" required>
+      </div>
+      <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-400 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200" [disabled]="!loginForm.valid">Login</button>
+    </form>
+  </div>
+</div>

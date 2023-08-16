@@ -1,0 +1,71 @@
+<div style="height: 90vh;" class="container mx-auto p-4">
+  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="showAddNoteModal = true">Add Note</button>
+
+  <!-- Board with notes -->
+  <div class="flex flex-wrap justify-center gap-8 mt-4">
+    <div *ngFor="let note of sortedNotes; index as i" (click)="selectNote(note, i); showEditNoteModal = true" class="relative p-4 border rounded-md shadow-lg cursor-pointer" style="max-width: 300px; min-width: 300px; flex-basis: calc(50% - 16px); height: 150px;" (click)="selectNote(note, i); showEditNoteModal = true">
+      <button class="delete-button absolute top-2 right-2" (click)="selectNote(note, i); deleteNote(); $event.stopPropagation()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="none" stroke="red" stroke-width="2" d="M6 6l12 12m0-12L6 18" />
+        </svg>
+      </button>
+      <h3 class="text-xl font-bold">{{ note.author }}</h3>
+      <p class="text-gray-600 overflow-hidden mb-4 ellipsis">{{ note.content | slice:0:100 }}{{ note.content.length > 100 ? '...' : '' }}</p>
+      <p class="text-sm text-gray-400 absolute bottom-2 right-2">{{ note.date | date:'medium' }}</p>
+    </div>
+  </div>
+
+
+  <!-- modal for create note -->
+  <div *ngIf="showAddNoteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 sm:align-middle sm:max-w-md w-full sm:w-3/4">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <form #noteForm="ngForm" (ngSubmit)="addNote(); showAddNoteModal = false">
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="author">Author</label>
+              <input #authorControl="ngModel" type="text" id="author" name="author" required [(ngModel)]="author" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     [class.border-red-500]="isSubmit && !authorControl.valid">
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Content</label>
+              <textarea #contentControl="ngModel" id="content" name="content" required [(ngModel)]="content" class="shadow appearance-none border rounded w-full py-2 sm:h-32 h-24 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        [class.border-red-500]="isSubmit && !contentControl.valid"></textarea>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse">
+              <button type="submit" (click)="isSubmit = true" [disabled]="isSubmit && noteForm.invalid" class="w-1/3 sm:w-auto bg-blue-500 ml-2 sm:ml-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+              <button type="button" (click)="cancelAdd()" class="w-1/3 sm:w-auto bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- modal for update note -->
+  <div *ngIf="showEditNoteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 sm:align-middle sm:max-w-md w-full sm:w-3/4">
+
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="editContent">Content</label>
+            <div *ngIf="selectedNote">
+              <textarea id="editContent" [(ngModel)]="selectedNote.content" class="shadow appearance-none border rounded sm:h-32 h-24 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse">
+            <button type="button" (click)="updateNote(); showEditNoteModal = false" class="w-1/3 sm:w-auto bg-blue-500 ml-2 sm:ml-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
+            <button type="button" (click)="cancelUpdate(); showEditNoteModal = false" class="w-1/3 sm:w-auto bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
