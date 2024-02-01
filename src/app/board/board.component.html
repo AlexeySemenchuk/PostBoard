@@ -9,7 +9,10 @@
           <path fill="none" stroke="red" stroke-width="2" d="M6 6l12 12m0-12L6 18" />
         </svg>
       </button>
-      <h3 class="text-xl font-bold">{{ note.author }}</h3>
+      <h3 class="text-xl overflow-hidden font-bold" style="max-height: 2rem">{{ note.author }}</h3>
+      <button class="delete-button absolute top-2 left-2" (click)="alert(note.content); $event.stopPropagation()">
+        +
+      </button>
       <p class="text-gray-600 overflow-hidden mb-4 ellipsis">{{ note.content | slice:0:100 }}{{ note.content.length > 100 ? '...' : '' }}</p>
       <p class="text-sm text-gray-400 absolute bottom-2 right-2">{{ note.date | date:'medium' }}</p>
     </div>
@@ -43,7 +46,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- modal for update note -->
   <div *ngIf="showEditNoteModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">

@@ -85,6 +85,11 @@ export class BoardComponent implements OnInit {
     return this.notes.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
+  alert(content: string) {
+    console.log(this.selectedNote?.content);
+    console.log(content);
+  }
+
   onAuthorContentChange(): void {
     this.isAuthorValid = this.author.trim() !== '';
     this.isContentValid = this.content.trim() !== '';
